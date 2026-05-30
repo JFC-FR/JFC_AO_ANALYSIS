@@ -1,0 +1,48 @@
+# Documents client — JAMAIS commités
+client-docs/
+documents-client/
+ao-*/
+appel-offres-*/
+
+# Livrables générés — JAMAIS commités (ils restent dans le projet Cowork)
+livrables/
+deliverables/
+output/
+out/
+*_Synthese_v*.pptx
+*_Recap-Documents_v*.xlsx
+*_Questions_v*.xlsx
+*_Reponse_v*.docx
+*_Suivi-Reponse_v*.xlsx
+1__*_GoNoGo_V2.pptx
+1__*_GoNoGo-Scoring_V*.xlsx
+
+# Sauf les templates SQLI dans templates/ qui sont versionnés
+!templates/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporaires Office
+~$*.docx
+~$*.xlsx
+~$*.pptx
+*.tmp
+
+# Logs et builds
+*.log
+node_modules/
+__pycache__/
+*.pyc
+02-phase-plan-reponse.md
+JFC_AO_ANALYSIS/templates/3__YYYYMMDD_Client_Project_Deal-Review_V2__1_.pptx
+/JFC_AO_ANALYSIS

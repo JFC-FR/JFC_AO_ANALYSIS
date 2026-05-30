@@ -1,70 +1,69 @@
-# JFC_AO_ANALYSIS
+# BidManagerJFC
 
-Skill Claude pour l'analyse d'appels d'offres et la construction de réponses, conforme à la charte SQLI.
+Skill Claude d'analyse d'appels d'offres et de construction de réponses,
+conforme à la charte SQLI. Anciennement `ao-analysis`.
 
 ## Objectif
 
 Industrialiser le traitement d'un appel d'offres entrant en trois phases :
 
-1. **Synthèse** — analyse des documents client (PDF, Word, Excel) et production d'une vue synthétique de l'AO.
-2. **Plan de réponse** — construction d'un plan détaillé avec consignes pour les contributeurs, sans rédiger à leur place.
-3. **Go/NoGo** — remplissage du PPT décisionnel SQLI à partir des éléments collectés.
+1. **Synthèse** — analyse des documents client (PDF, Word, Excel) et production
+   d'une vue synthétique de l'AO.
+2. **Plan de réponse** — plan détaillé avec consignes pour les contributeurs,
+   sans rédiger à leur place.
+3. **Go/NoGo** — remplissage du PPT décisionnel SQLI.
 
-À chaque phase, le skill respecte les principes :
+Principes : ne jamais inventer (`Non connu` si absent), ne jamais rédiger à la
+place des contributeurs, checkpoint humain obligatoire entre Phase 1 et Phase 2,
+respect strict des templates SQLI.
 
-- **Ne jamais inventer** d'information. Si une donnée n'apparaît pas dans les documents, indiquer `Non connu`.
-- **Ne jamais rédiger à la place des contributeurs**. Le rôle du skill est d'analyser, orienter, suivre et évaluer.
-- **Checkpoint humain obligatoire** entre la Phase 1 (Synthèse validée) et la Phase 2 (Plan de réponse), pour arbitrer les choix structurants.
+## Messages du skill
 
-## Comment l'utiliser
+- Au démarrage : « JFC va vous aider à analyser l'appel d'offre et à structurer
+  la réponse. C'est parti ! »
+- En fin de traitement : « Vous avez des suggestions pour améliorer ce
+  BidManager Skill ? Contactez jfcrepeau@sqli.com »
 
-1. Cloner ce repo dans un projet Claude Cowork dédié à un AO (un AO = un projet).
-2. Charger le skill (Claude détecte `SKILL.md` et l'utilise automatiquement sur les sujets AO).
-3. Déposer les documents client dans le projet Cowork.
-4. Demander à Claude la phase souhaitée (synthèse, plan de réponse, Go/NoGo).
+## Dépendance
+
+La génération des présentations est déléguée au skill **`sqli-pptx-canvas`**
+(rendu graphique conforme au template SQLI). Pour un usage complet, installer
+les deux skills. Exception : le Go/NoGo se remplit dans le template fourni, il
+n'est pas régénéré.
 
 ## Structure du repository
 
 ```
 JFC_AO_ANALYSIS/
-├── README.md                      # Ce fichier
-├── SKILL.md                       # Point d'entrée du skill (lu par Claude)
-├── references/                    # Détails opérationnels par phase et par sujet
+├── README.md                 # Ce fichier
+├── SKILL.md                  # Point d'entrée du skill (lu par Claude)
+├── .gitignore
+├── references/               # Détails par phase et par sujet
 │   ├── 01-phase-synthese.md
 │   ├── 02-phase-plan-reponse.md
 │   ├── 03-phase-gonogo.md
 │   ├── extraction-checklist.md
 │   ├── mise-a-jour.md
 │   ├── livrables-formats.md
-│   └── sqli-brand.md              # Charte graphique SQLI (palette, polices, layouts)
-├── templates/                     # Templates SQLI versionnés (Word, Excel, PowerPoint)
-│   ├── 20260527_SQLI_Word_Template_FR_C2_RESTREINT.docx
-│   ├── 20260527_SQLI_Excel_template_XLSX.xlsx
-│   ├── 20260527_SQLI_PowerPoint_Example_C2_RESTRICTED.pptx
-│   ├── 2025_SQLI_Theme_ELEVATE.thmx
-│   ├── 1__YYYYMMDD_Client_Project_GoNoGo_V2.pptx
-│   ├── 1__YYYYMMDD_Client_Project_GoNoGo-Scoring_V4_4.xlsx
-│   ├── 2__YYYYMMDD_Client_Project_Solution-Review_V2.pptx
-│   └── 3__YYYYMMDD_Client_Project_Deal-Review_V2__1_.pptx
-├── examples/                      # Exemples anonymisés (à venir)
-└── .gitignore
+│   └── sqli-brand.md
+├── templates/                # Templates SQLI versionnés
+├── examples/                 # Exemples anonymisés
+└── BidManagerJFC.skill       # Archive prête à installer / partager
 ```
 
-## Périmètre exclu
+## Installer le skill
 
-- Les **documents clients** (cahiers des charges, annexes) ne sont jamais versionnés ici. Ils restent dans le projet Cowork.
-- Les **livrables générés** (synthèse, plan, Go/NoGo remplis) restent également dans le projet Cowork.
+- Depuis le repo : cloner dans un projet Claude Cowork, Claude lit `SKILL.md`.
+- Pour partager : envoyer `BidManagerJFC.skill`, le collègue l'installe via le
+  bouton « Save skill ». Installer aussi `sqli-pptx-canvas` pour les PPT.
+
+## Un AO = un projet Cowork
+
+Les documents client et les livrables générés restent dans le projet Cowork,
+ils ne sont pas versionnés ici.
 
 ## Versioning de la méthodologie
 
-- `main` : version stable utilisée par tous les projets Cowork.
-- Améliorations proposées via branches dédiées et pull requests.
-- Chaque modification de template doit être documentée (changelog) car elle peut impacter les livrables passés.
-
-## Mise à jour des templates
-
-Les templates SQLI peuvent évoluer. Lorsqu'une nouvelle version est diffusée :
-
-1. Remplacer le fichier dans `templates/`.
-2. Mettre à jour les références dans `references/livrables-formats.md` si la structure change.
-3. Commit avec un message explicite (ex. `templates: maj Word v2.1 — ajout style Encart`).
+- `main` : version stable. Améliorations via branches et pull requests.
+- Toute évolution de template est documentée (changelog), car elle peut impacter
+  les livrables passés.
